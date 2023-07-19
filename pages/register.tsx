@@ -1,18 +1,18 @@
 import styles from "../styles/loginRegister.module.scss";
 import LeftSideComponent from "@/src/components/commons/logoLeftSide";
-import LoginForm from "@/src/components/login/loginForm";
+import RegisterForm from "@/src/components/register/registerForm";
 import Head from "next/head";
 
-export default function Login() {
+export default function Register() {
   return (
     <>
       <Head>
-        <title>Nerdolar - Login</title>
+        <title>Nerdolar</title>
       </Head>
       <main className={styles.main}>
         <LeftSideComponent />
         <div className={styles.rightSide}>
-          <LoginForm />
+          <RegisterForm />
         </div>
       </main>
     </>

@@ -4,3 +4,10 @@
   background-image: url("../../../../public/bg-home.png");
   background-position: center;
 }
+
+@media (max-width: 545px) {
+  .leftSide {
+    background-size: cover;
+    height: 50%;
+  }
+}

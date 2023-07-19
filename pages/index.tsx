@@ -1,9 +1,9 @@
-import styles from "../styles/page.module.scss";
+import styles from "../styles/home.module.scss";
 import LeftSideComponent from "@/src/components/commons/logoLeftSide";
 import Head from "next/head";
 import Link from "next/link";
 
-export default function Home() {
+export default function HomeNoAuth() {
   return (
     <>
       <Head>
@@ -19,7 +19,7 @@ export default function Home() {
               <Link href="/login">
                 <button>Login</button>
               </Link>
-              <Link href="/login">
+              <Link href="/register">
                 <button>Inscreva-se</button>
               </Link>
             </div>

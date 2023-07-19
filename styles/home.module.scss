@@ -17,12 +17,16 @@
     font-family: "Teko", sans-serif;
 
     margin-left: 40px;
+    margin-right: 40px;
     h1 {
+      font-weight: bold;
       font-size: 60px;
+      line-height: 55px;
     }
     h4 {
+      font-weight: bold;
       font-size: 30px;
-      line-height: 0px;
+      line-height: 25px;
     }
     .buttons {
       margin-top: 50px;
@@ -38,7 +42,7 @@
         width: 70%;
         padding: 8px;
         border-radius: 10px;
-        background-color: #fec63d;
+        background-color: $primary;
         cursor: pointer;
 
         &:hover {
@@ -47,5 +51,11 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 545px) {
+  .main {
+    flex-direction: column;
   }
 }
