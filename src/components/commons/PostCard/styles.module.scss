@@ -1,0 +1,109 @@
+@import "../../../../styles/colors.module.scss";
+
+.post {
+  display: flex;
+  border: solid 2px black;
+  padding: 0px 10px;
+  gap: 1%;
+  margin: 20px 10px;
+}
+.authorAboutDiv {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1%;
+
+  .authorDiv {
+    .userImgTimeAgoDiv {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .userImg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      color: white;
+      font-size: 25px;
+      width: 40px;
+      height: 40px;
+    }
+    .timeAgo {
+      font-size: 13px;
+    }
+  }
+  .aboutDiv {
+    font-size: 10px;
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 3px 5px;
+
+    .aboutTitle {
+      font-weight: bold;
+    }
+    p {
+      text-align: start;
+      line-height: 12px;
+    }
+    .mediaImg {
+      width: 60px;
+    }
+    .mediaCategory {
+      text-align: center;
+    }
+  }
+}
+
+.messageImagesDiv {
+  width: 100%;
+  font-family: "Teka", sans-serif;
+
+  .messageDiv {
+    margin-top: 10px;
+
+    .userNickname {
+      font-size: 13px;
+    }
+    .userName {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .message {
+      cursor: pointer;
+    }
+  }
+
+  .postImages {
+    margin: 20px 0px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+    .postImage {
+      height: 100%;
+    }
+  }
+  .singleImage {
+    text-align: center;
+  }
+  .imagesGrid {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    max-height: 505px;
+
+    .imageDiv {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 45%;
+      flex-grow: 1;
+      height: 250px;
+      overflow: hidden;
+    }
+  }
+}

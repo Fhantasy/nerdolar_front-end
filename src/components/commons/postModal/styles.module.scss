@@ -1,0 +1,81 @@
+@import "../../../../styles/colors.module.scss";
+
+.modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 23vw;
+  font-family: "Roboto", sans-serif;
+  color: $light;
+
+  .modalContent {
+    padding: 5px;
+    background-color: $light-dark;
+
+    .userDiv {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+
+      p {
+        font-size: 16px;
+        font-weight: bold;
+
+        span {
+          font-size: 13px;
+          font-weight: 400;
+        }
+      }
+    }
+    .postMessage {
+      padding-bottom: 5px;
+      border-bottom: 2px solid $dark;
+    }
+    .likes {
+      border-bottom: 2px solid $dark;
+    }
+    .comment {
+      margin: 5px 0px;
+      border: 2px solid $dark;
+      padding: 0px 2px;
+    }
+  }
+}
+.carousel {
+  position: absolute;
+  top: 50%;
+  left: 39%;
+  transform: translate(-50%, -50%);
+  max-height: 90vh;
+  height: 90vh;
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  .carouselItem {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+  }
+}
+.postImage {
+  margin: auto auto;
+  max-height: 90vh;
+  max-width: 100%;
+}
+
+.closeBtn {
+  padding-bottom: 4px;
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: #00000034;
+}

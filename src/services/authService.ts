@@ -1,3 +1,4 @@
+import { use } from "react";
 import api from "./api";
 
 interface RegisterParams {
@@ -34,5 +35,24 @@ export const authService = {
       sessionStorage.setItem("nerdolar-token", res.data.token);
     }
     return res;
+  },
+
+  isAuthorizated: async () => {
+    const token = sessionStorage.getItem("nerdolar-token");
+
+    const authorizated = await api
+      .get("/users/current", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((user) => {
+        console.log(user);
+        return true;
+      })
+      .catch((error) => false);
+
+    console.log(authorizated);
+    return authorizated;
   },
 };

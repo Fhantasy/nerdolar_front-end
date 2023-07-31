@@ -1,4 +1,4 @@
-import styles from "../styles/home.module.scss";
+import styles from "../styles/index.module.scss";
 import LeftSideComponent from "@/src/components/commons/logoLeftSide";
 import Head from "next/head";
 import Link from "next/link";

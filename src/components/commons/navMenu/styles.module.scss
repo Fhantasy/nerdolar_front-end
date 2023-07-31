@@ -1,0 +1,30 @@
+@import "../../../../styles/colors.module.scss";
+.navDiv {
+  padding: 20px 30px;
+  border-right: 2px solid black;
+}
+.logo {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-weight: bold;
+  color: $primary;
+}
+.menu {
+  width: 100%;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  font-family: "Barlow", sans-serif;
+  color: $dark;
+
+  h4 {
+    font-weight: bold;
+  }
+  button {
+    background-color: $primary;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    color: $dark;
+  }
+}
