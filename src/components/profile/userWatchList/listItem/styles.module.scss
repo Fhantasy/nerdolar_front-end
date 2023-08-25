@@ -1,0 +1,69 @@
+@import "../../../../../styles/colors.module.scss";
+
+.itemDiv {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  border-bottom: 1px solid $light-dark;
+
+  .mediaImgDiv {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2px;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+
+    .mediaImg {
+      object-fit: cover;
+    }
+  }
+  .row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .episode {
+    text-align: center;
+    min-width: 100px;
+    line-height: 15px;
+
+    .episodeBtn {
+      display: inline-block;
+      font-size: 20px;
+      font-weight: bold;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+
+    .increment {
+      @extend .episodeBtn;
+
+      margin-right: 3px;
+
+      &:hover {
+        color: green;
+      }
+    }
+    .decrement {
+      @extend .episodeBtn;
+
+      margin-left: 3px;
+
+      &:hover {
+        color: red;
+      }
+    }
+  }
+}

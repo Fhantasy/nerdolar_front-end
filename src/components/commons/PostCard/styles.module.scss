@@ -3,7 +3,7 @@
 .post {
   display: flex;
   border: solid 2px black;
-  padding: 0px 10px;
+  padding: 0px 10px 10px 10px;
   gap: 1%;
   margin: 20px 10px;
 }
@@ -32,26 +32,6 @@
       font-size: 13px;
     }
   }
-  .aboutDiv {
-    font-size: 10px;
-    text-align: center;
-    background-color: #f0f0f0;
-    padding: 3px 5px;
-
-    .aboutTitle {
-      font-weight: bold;
-    }
-    p {
-      text-align: start;
-      line-height: 12px;
-    }
-    .mediaImg {
-      width: 60px;
-    }
-    .mediaCategory {
-      text-align: center;
-    }
-  }
 }
 
 .messageImagesDiv {
@@ -61,25 +41,41 @@
   .messageDiv {
     margin-top: 10px;
 
-    .userNickname {
-      font-size: 13px;
+    .nickLikeDiv {
+      display: flex;
+      justify-content: space-between;
+
+      .userNickname {
+        font-size: 13px;
+      }
+      .userName {
+        font-size: 16px;
+        font-weight: bold;
+      }
+      .likeHeart {
+        font-size: 20px;
+        cursor: pointer;
+        transition: 0.4s;
+
+        &:hover {
+          transform: scale(115%);
+        }
+      }
     }
-    .userName {
-      font-size: 16px;
-      font-weight: bold;
-    }
+
     .message {
       cursor: pointer;
     }
   }
 
   .postImages {
-    margin: 20px 0px;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     cursor: pointer;
 
     .postImage {
+      object-fit: cover;
       height: 100%;
     }
   }

@@ -1,10 +1,12 @@
 import { PostType, postService } from "@/src/services/postService";
 import { useEffect, useState } from "react";
-import PostCard from "../../commons/PostCard";
+import PostCard from "../../commons/postCard";
+import { currentPageSetter } from "@/src/services/currentPageSetter";
+import PageBottom from "../../commons/pageBottom";
 
 const FeedComponent = () => {
   const [posts, setPosts] = useState<PostType[]>();
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [postsEnded, setPostsEnded] = useState(false);
 
   useEffect(() => {
@@ -27,30 +29,15 @@ const FeedComponent = () => {
   }, [currentPage]);
 
   useEffect(() => {
-    const intersectionObserver = new IntersectionObserver((entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) {
-        if (postsEnded === false) {
-          setCurrentPage((prevState) => prevState + 1);
-        }
-      }
-    });
-
-    intersectionObserver.observe(document.querySelector("#pageBottom")!);
-    return () => intersectionObserver.disconnect();
+    currentPageSetter(setCurrentPage);
   }, []);
 
   return (
-    <div style={{ width: "40%" }}>
+    <div style={{ width: "700px" }}>
       {posts?.map((post) => (
         <PostCard post={post} key={post.id} />
       ))}
-      <div id="pageBottom">
-        {postsEnded ? (
-          <p>Não tem mais postagens por enquanto :(</p>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
+      <PageBottom dataEnded={postsEnded} />
     </div>
   );
 };

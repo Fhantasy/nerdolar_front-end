@@ -46,13 +46,8 @@ export const authService = {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((user) => {
-        console.log(user);
-        return true;
-      })
-      .catch((error) => false);
+      .catch(() => null);
 
-    console.log(authorizated);
     return authorizated;
   },
 };

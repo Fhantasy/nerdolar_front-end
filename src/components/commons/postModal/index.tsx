@@ -2,8 +2,8 @@ import { PostType } from "@/src/services/postService";
 import styles from "./styles.module.scss";
 import { Carousel, CarouselControl, CarouselItem, Modal } from "reactstrap";
 import { useState } from "react";
-import Image from "next/image";
 import UserThumb from "../userThumb";
+import Link from "next/link";
 
 interface props {
   isOpen: boolean;
@@ -18,14 +18,14 @@ const PostModal = ({ isOpen, toggle, post }: props) => {
   const next = () => {
     if (animating) return;
     const nextIndex =
-      activeIndex === post.PostImages.length - 1 ? 0 : activeIndex + 1;
+      activeIndex === post.imageUrls.length - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
   };
 
   const previous = () => {
     if (animating) return;
     const nextIndex =
-      activeIndex === 0 ? post.PostImages.length - 1 : activeIndex - 1;
+      activeIndex === 0 ? post.imageUrls.length - 1 : activeIndex - 1;
     setActiveIndex(nextIndex);
   };
 
@@ -50,15 +50,15 @@ const PostModal = ({ isOpen, toggle, post }: props) => {
       previous={previous}
       interval={false}
     >
-      {post.PostImages.map((img) => (
+      {post.imageUrls?.map((imgUrl, index) => (
         <CarouselItem
-          key={img.id}
+          key={index}
           onExiting={() => setAnimating(true)}
           onExited={() => setAnimating(false)}
         >
           <div className={styles.carouselItem}>
             <img
-              src={`${process.env.NEXT_PUBLIC_URL}/${img.imgUrl}`}
+              src={`${process.env.NEXT_PUBLIC_URL}/${imgUrl}`}
               alt=""
               className={styles.postImage}
             />
@@ -79,45 +79,51 @@ const PostModal = ({ isOpen, toggle, post }: props) => {
   );
 
   return (
-    <>
-      <Modal
-        className={styles.modal}
-        external={[closeBtn, carousel]}
-        isOpen={isOpen}
-        toggle={toggle}
-        modalClassName={styles.overlayModal}
-      >
-        <div className={styles.modalContent}>
-          <div className={styles.userDiv}>
-            <UserThumb
-              profileImgUrl={post.User.profileImg}
-              username={post.User.name}
-            />
+    <Modal
+      className={
+        post.imageUrls.length > 0 ? styles.modalWithCarousel : styles.modal
+      }
+      external={[closeBtn, post.imageUrls.length > 0 ? carousel : null]}
+      isOpen={isOpen}
+      toggle={toggle}
+      modalClassName={styles.overlayModal}
+    >
+      <div className={styles.modalContent}>
+        <div className={styles.userDiv}>
+          <UserThumb
+            profileImgUrl={post.User.profileImg}
+            username={post.User.name}
+            nickname={post.User.nickname}
+          />
+          <Link href={post.User.nickname}>
             <p className={styles.userNickname}>
               {post.User.name} <span>@{post.User.nickname}</span>
             </p>
-          </div>
-          <p className={styles.postMessage}>{post.message}</p>
-          <p className={styles.likes}>&#x2764; {post.likes}</p>
-          <div className={styles.commentsDiv}>
-            {post.comments?.map((comment) => (
-              <div key={comment.id} className={styles.comment}>
-                <div className={styles.userDiv}>
-                  <UserThumb
-                    profileImgUrl={comment.user.profileImg}
-                    username={comment.user.name}
-                  />
+          </Link>
+        </div>
+        <p className={styles.postMessage}>{post.message}</p>
+        <p className={styles.likes}>&#x2764; {post.likes}</p>
+        <div className={styles.commentsDiv}>
+          {post.comments?.map((comment) => (
+            <div key={comment.id} className={styles.comment}>
+              <div className={styles.userDiv}>
+                <UserThumb
+                  profileImgUrl={comment.user.profileImg}
+                  username={comment.user.name}
+                  nickname={comment.user.nickname}
+                />
+                <Link href={comment.user.nickname}>
                   <p>
                     {comment.user.name} <span>@{comment.user.nickname}</span>
                   </p>
-                </div>
-                <p>{comment.message}</p>
+                </Link>
               </div>
-            ))}
-          </div>
+              <p>{comment.message}</p>
+            </div>
+          ))}
         </div>
-      </Modal>
-    </>
+      </div>
+    </Modal>
   );
 };
 

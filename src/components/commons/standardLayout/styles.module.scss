@@ -1,0 +1,12 @@
+@import "../../../../styles/colors.module.scss";
+
+.main {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+.mainContent {
+  width: 700px;
+  border-left: 2px solid $dark;
+  border-right: 2px solid $dark;
+}

@@ -1,28 +1,19 @@
 import api from "./api";
 import { MediaProductType } from "./mediaProductService";
 
-export type PostType = {
+export type WatchItemType = {
   id: number;
-  message: string;
-  likes?: number;
-  liked: [{ nickname: string }];
-  createdAt: Date;
-  imageUrls: string[];
-  User: { id: number; nickname: string; name: string; profileImg: string };
-  MediaProduct: MediaProductType;
-  comments?: {
-    id: number;
-    message: string;
-    createdAt: Date;
-    user: { id: number; nickname: string; name: string; profileImg: string };
-  }[];
+  status: "ongoing" | "complete";
+  currentEpisode: number;
+  mediaProduct: MediaProductType;
 };
 
-export const postService = {
-  getPost: async (postId: number) => {
+export const watchItemService = {
+  getOne: async (id: number) => {
     const token = sessionStorage.getItem("nerdolar-token");
+
     const res = await api
-      .get(`/posts/${postId}`, {
+      .get(`/watch-item/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -33,13 +24,15 @@ export const postService = {
         }
         return error;
       });
+
     return res;
   },
 
-  getAllFromUser: async (userId: number, page: number) => {
+  getReleases: async () => {
     const token = sessionStorage.getItem("nerdolar-token");
+
     const res = await api
-      .get(`/posts/user/${userId}?page=${page}`, {
+      .get("/releases", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -50,30 +43,42 @@ export const postService = {
         }
         return error;
       });
+
     return res;
   },
 
-  getAllFromMedia: async (mediaProductId: number, page: number) => {
+  getAllPerCategory: async (
+    categoryId: number,
+    status: "ongoing" | "complete",
+    currentPage: number,
+    userId: number
+  ) => {
     const token = sessionStorage.getItem("nerdolar-token");
+
     const res = await api
-      .get(`/posts/media-product/${mediaProductId}?page=${page}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(
+        `/watch-item/category/${categoryId}/${userId}?status=${status}&page=${currentPage}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .catch((error) => {
         if (error.response.status === 400) {
           return error.response;
         }
         return error;
       });
+
     return res;
   },
 
-  feed: async (page: number) => {
+  create: async (params: { mediaProductId: number; categoryId: number }) => {
     const token = sessionStorage.getItem("nerdolar-token");
+
     const res = await api
-      .get(`/feed?perPage=5&page=${page}`, {
+      .post(`/watch-item`, params, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -84,14 +89,19 @@ export const postService = {
         }
         return error;
       });
+
     return res;
   },
 
-  post: async (data: FormData) => {
+  update: async (params: {
+    watchItemId: number;
+    status?: "ongoing" | "complete";
+    currentEpisode?: number;
+  }) => {
     const token = sessionStorage.getItem("nerdolar-token");
 
     const res = await api
-      .post("/posts", data, {
+      .put(`/watch-item`, params, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -102,6 +112,26 @@ export const postService = {
         }
         return error;
       });
+
+    return res;
+  },
+
+  delete: async (id: number) => {
+    const token = sessionStorage.getItem("nerdolar-token");
+
+    const res = await api
+      .delete(`/watch-item/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          return error.response;
+        }
+        return error;
+      });
+
     return res;
   },
 };

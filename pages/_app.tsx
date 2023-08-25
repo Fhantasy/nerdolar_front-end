@@ -5,6 +5,13 @@ import TimeAgo from "javascript-time-ago";
 
 TimeAgo.addDefaultLocale({
   locale: "pt-BR",
+  now: {
+    now: {
+      current: "agora",
+      future: "em instantes",
+      past: "em instantes atras",
+    },
+  },
   mini: {
     second: "{0}s",
     minute: "{0}m",
@@ -24,13 +31,13 @@ TimeAgo.addDefaultLocale({
     year: "{0} ano",
   },
   long: {
-    second: "{0} segundo(s) atras",
-    minute: "{0} minutos(s) atras",
-    hour: "{0} hora(s) atras",
-    day: "{0} dia(s) atras",
-    week: "{0} semana(s) atras",
-    month: "{0} mes(es) atras",
-    year: "{0} ano(s) atras",
+    second: { past: "{0} segundo(s) atras", future: "em {0} segundo(s)" },
+    minute: { past: "{0} minuto(s) atras", future: "em {0} minuto(s)" },
+    hour: { past: "{0} hora(s) atras", future: "em {0} hora(s)" },
+    day: { past: "{0} dia(s) atras", future: "em {0} dia(s)" },
+    week: { past: "{0} semana(s) atras", future: "em {0} semana(s)" },
+    month: { past: "{0} mes(es) atras", future: "em {0} mes(es)" },
+    year: { past: "{0} ano(s) atras", future: "em {0} ano(s)" },
   },
   narrow: {
     second: "{0}s",

@@ -1,7 +1,6 @@
 @import "../../../../styles/colors.module.scss";
 .navDiv {
   padding: 20px 30px;
-  border-right: 2px solid black;
 }
 .logo {
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
@@ -26,5 +25,6 @@
     border-radius: 10px;
     margin-top: 20px;
     color: $dark;
+    font-weight: bold;
   }
 }
