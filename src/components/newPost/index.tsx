@@ -5,14 +5,7 @@ import {
   mediaProductService,
 } from "@/src/services/mediaProductService";
 import { postService } from "@/src/services/postService";
-import {
-  ChangeEvent,
-  FormEvent,
-  createRef,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, createRef, useEffect, useState } from "react";
 import {
   FaRegLaughBeam,
   FaFileImage,

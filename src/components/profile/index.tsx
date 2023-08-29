@@ -8,6 +8,7 @@ import UserThumb from "../commons/userThumb";
 import { followService } from "@/src/services/followService";
 import UserPosts from "./userPosts";
 import UserWatchList from "./userWatchList";
+import ProfileModal from "./profileModal";
 
 interface props {
   cbNickname: Dispatch<SetStateAction<string>>;
@@ -21,6 +22,11 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
   const [userFound, setUserFound] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
   const [currentContent, setCurrentContent] = useState("posts");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const toggleModal = () => {
+    setModalIsOpen((prevstate) => !prevstate);
+  };
 
   const handleFollow = () => {
     if (!isFollowing) {
@@ -55,20 +61,24 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
     setCurrentContent(content);
   };
 
-  useEffect(() => {
+  const getUser = async () => {
     if (typeof nickname === "string") {
-      userService.getOne(nickname).then((data) => {
-        if (data.status === 200) {
-          setUser(data.data);
-          setIsFollowing(data.data.isFollowing);
-          cbNickname(data.data.nickname);
-          contentChoose("posts");
-        } else {
-          setUserFound(false);
-          cbNickname("Not Found");
-        }
-      });
+      const data = await userService.getOne(nickname);
+
+      if (data.status === 200) {
+        setUser(data.data);
+        setIsFollowing(data.data.isFollowing);
+        cbNickname(data.data.nickname);
+        contentChoose("posts");
+      } else {
+        setUserFound(false);
+        cbNickname("Not Found");
+      }
     }
+  };
+
+  useEffect(() => {
+    getUser();
   }, [nickname]);
 
   if (!userFound) {
@@ -83,7 +93,7 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
         {user.profileBannerImg ? (
           <Image
             alt="bannerImg"
-            src={`${process.env.NEXT_PUBLIC_URL}/public/${user.profileBannerImg}`}
+            src={`${process.env.NEXT_PUBLIC_URL}/${user.profileBannerImg}`}
             fill={true}
             sizes="default"
             className={styles.bannerImg}
@@ -101,7 +111,7 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
           <p className={styles.nickname}>@{user.nickname}</p>
         </div>
         {isMyProfile ? (
-          <button>Editar Perfil</button>
+          <button onClick={toggleModal}>Editar Perfil</button>
         ) : (
           <button onClick={handleFollow}>
             {isFollowing ? "Deixar de Seguir" : "Seguir"}
@@ -114,7 +124,12 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
           {user.birth ? (
             <div className={styles.userInfoDiv}>
               <FaCakeCandles />
-              <span>{new Date(user.birth).toLocaleDateString()}</span>
+              <span>
+                {new Date(user.birth).toLocaleString("pt-BR", {
+                  timeZone: "UTC",
+                  dateStyle: "short",
+                })}
+              </span>
             </div>
           ) : null}
           {user.locale ? (
@@ -152,6 +167,11 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
         </button>
       </div>
       <div className={styles.mainContentDiv}>{content()}</div>
+      <ProfileModal
+        isOpen={modalIsOpen}
+        toggle={toggleModal}
+        refreshUser={getUser}
+      />
     </div>
   );
 };

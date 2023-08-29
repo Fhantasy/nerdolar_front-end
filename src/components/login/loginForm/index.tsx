@@ -45,6 +45,22 @@ const LoginForm = () => {
       }, 3000);
       setToastMessage("Registro realizado com sucesso!");
     }
+    if (router.query.passwordUpdated === "true") {
+      setToastIsOpen(true);
+      setToastColor("bg-success");
+      setTimeout(() => {
+        setToastIsOpen(false);
+      }, 3000);
+      setToastMessage("Senha Alterada! Faça login novamente");
+    }
+    if (router.query.accountUpdated === "true") {
+      setToastIsOpen(true);
+      setToastColor("bg-success");
+      setTimeout(() => {
+        setToastIsOpen(false);
+      }, 3000);
+      setToastMessage("Conta Atualizada! Faça login novamente");
+    }
   }, [router.query]);
 
   return (

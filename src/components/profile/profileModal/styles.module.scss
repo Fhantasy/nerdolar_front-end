@@ -1,0 +1,55 @@
+@import "../../../../styles/colors.module.scss";
+
+.modalContent {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  padding: 15px;
+  background-color: $light;
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .menuBtn {
+      width: 100px;
+      height: fit-content;
+      border-radius: 7px;
+      border: 2px solid $light-dark;
+      color: $light-dark;
+      background-color: white;
+      font-weight: bold;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: $light-dark;
+        color: $light;
+      }
+    }
+
+    .menuBtnActive {
+      width: 100px;
+      height: fit-content;
+      border-radius: 7px;
+      border: 2px solid $light-dark;
+      background-color: $light-dark;
+      color: $light;
+      font-weight: bold;
+    }
+  }
+}
+.closeIconDiv {
+  display: flex;
+  justify-content: flex-end;
+  background-color: $light;
+  text-align: end;
+
+  p {
+    width: fit-content;
+    margin: 0px 5px;
+    font-size: 30px;
+    line-height: 15px;
+    cursor: pointer;
+  }
+}

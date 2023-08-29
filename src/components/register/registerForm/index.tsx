@@ -57,7 +57,13 @@ const RegisterForm = () => {
 
         <div className={styles.inputGroup}>
           <label htmlFor="nickname">Escolha um apelido unico: </label>
-          <input type="text" id="nickname" name="nickname" required />
+          <input
+            type="text"
+            id="nickname"
+            name="nickname"
+            maxLength={30}
+            required
+          />
         </div>
 
         <div className={styles.inputGroup}>

@@ -23,7 +23,7 @@ const UserThumb = ({ profileImgUrl, username, nickname, size }: props) => {
         >
           <Image
             className={styles.userImg}
-            src={`${process.env.NEXT_PUBLIC_URL}/public/${profileImgUrl}`}
+            src={`${process.env.NEXT_PUBLIC_URL}/${profileImgUrl}`}
             fill={true}
             sizes="default"
             alt="userImg"

@@ -3,6 +3,7 @@ import api from "./api";
 export type UserType = {
   id: number;
   nickname: string;
+  email: string;
   name: string;
   bio: string;
   locale: string;
@@ -21,6 +22,60 @@ export const userService = {
 
     const res = await api
       .get(`/users/${nickname}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          return error.response;
+        }
+        return error;
+      });
+    return res;
+  },
+  updateProfile: async (data: FormData) => {
+    const token = sessionStorage.getItem("nerdolar-token");
+
+    const res = await api
+      .put(`/users/current/profile`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          return error.response;
+        }
+        return error;
+      });
+    return res;
+  },
+  updateAccount: async (params: { nickname: string; email: string }) => {
+    const token = sessionStorage.getItem("nerdolar-token");
+
+    const res = await api
+      .put(`/users/current/account`, params, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          return error.response;
+        }
+        return error;
+      });
+    return res;
+  },
+  updatePassword: async (params: {
+    currentPassword: string;
+    newPassword: string;
+  }) => {
+    const token = sessionStorage.getItem("nerdolar-token");
+
+    const res = await api
+      .put(`/users/current/password`, params, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
