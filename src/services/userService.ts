@@ -88,4 +88,21 @@ export const userService = {
       });
     return res;
   },
+  search: async (name: string, page: number) => {
+    const token = sessionStorage.getItem("nerdolar-token");
+
+    const res = await api
+      .get(`/users/search?name=${name}&page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          return error.response;
+        }
+        return error;
+      });
+    return res;
+  },
 };

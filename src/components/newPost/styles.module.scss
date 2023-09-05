@@ -39,38 +39,6 @@
   color: red;
   margin-top: 5px;
 }
-.emotesDiv {
-  position: relative;
-  z-index: 1;
-
-  .emotesTab {
-    position: absolute;
-    background-color: $light;
-    border: 2px solid $light-dark;
-    border-radius: 5px;
-    max-height: 155px;
-    overflow-y: scroll;
-    padding: 2px;
-    text-align: center;
-
-    span {
-      cursor: pointer;
-    }
-
-    .closeBtn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-bottom: 5px;
-      width: 100%;
-      height: 25px;
-      border: none;
-      background-color: white;
-      font-size: 25px;
-      font-weight: bold;
-    }
-  }
-}
 .removeBtnDiv {
   display: flex;
   justify-content: flex-end;

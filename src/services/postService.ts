@@ -10,12 +10,6 @@ export type PostType = {
   imageUrls: string[];
   User: { id: number; nickname: string; name: string; profileImg: string };
   MediaProduct: MediaProductType;
-  comments?: {
-    id: number;
-    message: string;
-    createdAt: Date;
-    user: { id: number; nickname: string; name: string; profileImg: string };
-  }[];
 };
 
 export const postService = {
@@ -74,6 +68,23 @@ export const postService = {
     const token = sessionStorage.getItem("nerdolar-token");
     const res = await api
       .get(`/feed?perPage=5&page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          return error.response;
+        }
+        return error;
+      });
+    return res;
+  },
+
+  search: async (term: string, page: number) => {
+    const token = sessionStorage.getItem("nerdolar-token");
+    const res = await api
+      .get(`/posts/search?page=${page}&name=${term}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

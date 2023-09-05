@@ -72,41 +72,45 @@ const ProfileModal = ({ toggle, isOpen, refreshUser }: props) => {
     setFormName("profile");
   }, [isOpen]);
 
-  if (!currentUser) return <SpinnerComponent />;
-
   return (
     <>
       <Modal isOpen={isOpen} toggle={toggle} centered size="lg">
-        <div className={styles.closeIconDiv}>
-          <p onClick={() => toggle()}>&times;</p>
-        </div>
+        {currentUser ? (
+          <>
+            <div className={styles.closeIconDiv}>
+              <p onClick={() => toggle()}>&times;</p>
+            </div>
 
-        <div className={styles.modalContent}>
-          <div className={styles.menu}>
-            <button
-              className={styles.menuBtnActive}
-              id="profile"
-              onClick={() => changeForm("profile")}
-            >
-              Perfil
-            </button>
-            <button
-              className={styles.menuBtn}
-              id="account"
-              onClick={() => changeForm("account")}
-            >
-              Conta
-            </button>
-            <button
-              className={styles.menuBtn}
-              id="password"
-              onClick={() => changeForm("password")}
-            >
-              Senha
-            </button>
-          </div>
-          {form()}
-        </div>
+            <div className={styles.modalContent}>
+              <div className={styles.menu}>
+                <button
+                  className={styles.menuBtnActive}
+                  id="profile"
+                  onClick={() => changeForm("profile")}
+                >
+                  Perfil
+                </button>
+                <button
+                  className={styles.menuBtn}
+                  id="account"
+                  onClick={() => changeForm("account")}
+                >
+                  Conta
+                </button>
+                <button
+                  className={styles.menuBtn}
+                  id="password"
+                  onClick={() => changeForm("password")}
+                >
+                  Senha
+                </button>
+              </div>
+              {form()}
+            </div>
+          </>
+        ) : (
+          <SpinnerComponent />
+        )}
       </Modal>
       <ToastComponent
         isOpen={toastIsOpen}

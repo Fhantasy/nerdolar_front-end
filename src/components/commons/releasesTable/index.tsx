@@ -38,50 +38,65 @@ const ReleasesTable = () => {
   }, []);
 
   return (
-    <table className={styles.releasesTable}>
-      {releases
-        ? Object.entries(releases).map((row, index) => (
-            <tbody key={index}>
-              <tr onClick={() => toogleItens(index)}>
-                <th colSpan={3}>
-                  <p>
-                    {row[0]} <FaAngleDown className={styles.arrow} />
-                  </p>
-                </th>
-              </tr>
+    <div className={styles.releasesSection}>
+      <div className={styles.content}>
+        <h4>Lançamentos</h4>
+        {releases && Object.entries(releases).length > 0 ? (
+          <table className={styles.releasesTable}>
+            {releases
+              ? Object.entries(releases).map((row, index) => (
+                  <tbody key={index}>
+                    <tr onClick={() => toogleItens(index)}>
+                      <th colSpan={3}>
+                        <p>
+                          {row[0]} <FaAngleDown className={styles.arrow} />
+                        </p>
+                      </th>
+                    </tr>
 
-              {row[1].map((watchIten) => (
-                <tr
-                  key={watchIten.id}
-                  className={`rows${index}`}
-                  style={{ display: "none" }}
-                >
-                  <td>
-                    <Link href={`/media-product/${watchIten.mediaProduct.id}`}>
-                      {watchIten.mediaProduct.title}
-                    </Link>
-                  </td>
-                  <td style={{ whiteSpace: "nowrap", fontWeight: "bold" }}>
-                    Ep. {watchIten.mediaProduct.currentEpisode + 1}
-                  </td>
-                  <td style={{ whiteSpace: "nowrap", color: "green" }}>
-                    Lança{" "}
-                    <ReactTimeAgo
-                      style={{ fontSize: "12px" }}
-                      future
-                      date={new Date(
-                        watchIten.mediaProduct.releaseDates[0]
-                      ).getTime()}
-                      locale="pt-BR"
-                      timeStyle="long"
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          ))
-        : null}
-    </table>
+                    {row[1].map((watchIten) => (
+                      <tr
+                        key={watchIten.id}
+                        className={`rows${index}`}
+                        style={{ display: "none" }}
+                      >
+                        <td>
+                          <Link
+                            href={`/media-product/${watchIten.mediaProduct.id}`}
+                          >
+                            {watchIten.mediaProduct.title}
+                          </Link>
+                        </td>
+                        <td
+                          style={{ whiteSpace: "nowrap", fontWeight: "bold" }}
+                        >
+                          Ep. {watchIten.mediaProduct.currentEpisode + 1}
+                        </td>
+                        <td style={{ whiteSpace: "nowrap", color: "green" }}>
+                          Lança{" "}
+                          <ReactTimeAgo
+                            style={{ fontSize: "12px" }}
+                            future
+                            date={new Date(
+                              watchIten.mediaProduct.releaseDates[0]
+                            ).getTime()}
+                            locale="pt-BR"
+                            timeStyle="long"
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                ))
+              : null}
+          </table>
+        ) : (
+          <div className={styles.notReleases}>
+            <p>Nenhum item da sua Nerdlista está em lançamento</p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

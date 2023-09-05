@@ -9,6 +9,7 @@ import { followService } from "@/src/services/followService";
 import UserPosts from "./userPosts";
 import UserWatchList from "./userWatchList";
 import ProfileModal from "./profileModal";
+import SpinnerComponent from "../commons/spinner";
 
 interface props {
   cbNickname: Dispatch<SetStateAction<string>>;
@@ -66,6 +67,7 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
       const data = await userService.getOne(nickname);
 
       if (data.status === 200) {
+        console.log(data);
         setUser(data.data);
         setIsFollowing(data.data.isFollowing);
         cbNickname(data.data.nickname);
@@ -85,8 +87,9 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
     return <p>Usuario não encontrado</p>;
   }
 
-  if (!user) return <p>Loading...</p>;
+  if (!user) return <SpinnerComponent />;
 
+  console.log(user);
   return (
     <div className={styles.profile}>
       <div className={styles.header}>

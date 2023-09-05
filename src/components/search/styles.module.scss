@@ -1,0 +1,101 @@
+@import "../../../styles/colors.module.scss";
+
+.searchForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+
+  input {
+    width: 100%;
+    border: 2px solid $light-dark;
+    border-right: none;
+    border-radius: 7px 0 0 7px;
+    height: 30px;
+    font-size: 16px;
+  }
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    border: 2px solid $light-dark;
+    border-radius: 0 7px 7px 0;
+    height: 30px;
+    background-color: $light-dark;
+    color: $light;
+
+    :first-child {
+      transition: 0.4s;
+    }
+
+    &:hover :first-child {
+      transform: scale(115%);
+    }
+  }
+}
+.chooseContentDiv {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0px;
+
+  .chooseContentBtn {
+    width: 100px;
+    border: 2px solid $light-dark;
+    outline: none;
+    background-color: white;
+    color: $light-dark;
+    transition: 0.4s;
+
+    &:hover {
+      background-color: $light-dark;
+      color: $light;
+    }
+  }
+  .chooseContentBtnActive {
+    width: 100px;
+    border: 2px solid $light-dark;
+    outline: none;
+    background-color: $light-dark;
+    color: $light;
+    transition: 0.4s;
+  }
+}
+
+.userItem {
+  display: flex;
+  align-items: flex-end;
+  margin: 10px;
+
+  .username {
+    margin-left: 5px;
+    margin-right: 2px;
+    font-size: 16px;
+  }
+  .userNickname {
+    font-size: 12px;
+  }
+}
+
+.mediaItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 10px;
+  border-bottom: 2px solid $light-dark;
+
+  div {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  img {
+    width: 60px;
+  }
+
+  .title {
+    margin: 0px 5px;
+    font-size: 16px;
+  }
+}

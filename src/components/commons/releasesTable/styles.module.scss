@@ -1,13 +1,26 @@
 @import "../../../../styles/colors.module.scss";
 
-.releasesTable {
+.releasesSection {
   margin: 10px;
-  height: fit-content;
   width: 400px;
+  text-align: center;
+
+  h4 {
+    font-weight: bold;
+  }
+}
+.content {
+  position: sticky;
+  top: 20px;
+}
+.releasesTable {
+  width: 100%;
+  height: fit-content;
   overflow: hidden;
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid $dark;
+  text-align: left;
 
   td,
   th {
@@ -35,4 +48,8 @@
       }
     }
   }
+}
+.notReleases {
+  border: 2px solid $light-dark;
+  padding: 10px;
 }

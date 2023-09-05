@@ -15,6 +15,7 @@ import {
 import MediaProductPostCard from "../commons/mediaProductPostCard";
 import { useRouter } from "next/router";
 import ToastComponent from "../commons/toastComponent";
+import EmotesTab from "../commons/emotesTab";
 
 const PostForm = () => {
   const router = useRouter();
@@ -27,7 +28,7 @@ const PostForm = () => {
   const [mediaProducts, setMediaProducts] = useState<MediaProductType[]>([]);
   const [previewImageUrls, setPreviewImageUrls] = useState<string[]>([]);
   const [previewErrorMessage, setPreviewErrorMessage] = useState("");
-  const [emoteSectionIsOpen, setEmoteSectionIsOpen] = useState(false);
+  const [emoteTabIsOpen, setEmoteTabIsOpen] = useState(false);
   const [mediaProductSelectorIsOpen, setMediaProductSelectorIsOpen] =
     useState(false);
   const [currentMediaProduct, setCurrentMediaProduct] =
@@ -173,7 +174,7 @@ const PostForm = () => {
 
       <div className={styles.insertDiv}>
         <FaRegLaughBeam
-          onClick={() => setEmoteSectionIsOpen((prevState) => !prevState)}
+          onClick={() => setEmoteTabIsOpen((prevState) => !prevState)}
           className={styles.insertIcon}
         />
         <label htmlFor="images">
@@ -181,27 +182,11 @@ const PostForm = () => {
         </label>
       </div>
 
-      <div className={styles.emotesDiv}>
-        {emoteSectionIsOpen ? (
-          <div className={styles.emotesTab}>
-            <button
-              type="button"
-              className={styles.closeBtn}
-              onClick={() => setEmoteSectionIsOpen(false)}
-            >
-              &times;
-            </button>
-            {emoteList.map((emote, index) => (
-              <span
-                key={index}
-                onClick={(ev) => addEmoteToMessage(ev.currentTarget.innerText)}
-              >
-                {emote}
-              </span>
-            ))}
-          </div>
-        ) : null}
-      </div>
+      <EmotesTab
+        isOpen={emoteTabIsOpen}
+        setIsOpen={setEmoteTabIsOpen}
+        addEmoteToMessage={addEmoteToMessage}
+      />
 
       <input
         type="file"

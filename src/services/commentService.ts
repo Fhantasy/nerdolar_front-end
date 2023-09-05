@@ -1,29 +1,18 @@
 import api from "./api";
 
-export type MediaProductType = {
+export type CommentType = {
   id: number;
-  title: string;
-  sinopsys: string;
-  status: string;
-  isEpisodic: boolean;
-  launchDate: Date;
-  endDate: Date;
-  totalEpisodes: number;
-  currentEpisode: number;
-  releaseDates: Date[];
-  thumbnailImg: string;
-  pageBannerImg: string;
-  watchItens: { id: number }[];
-  category: { id: number; name: string };
-  genres?: { name: string }[];
+  message: string;
+  createdAt: Date;
+  user: { id: number; nickname: string; name: string; profileImg: string };
 };
 
-export const mediaProductService = {
-  getOne: async (id: number) => {
+export const commentService = {
+  create: async (params: { message: string; postId: number }) => {
     const token = sessionStorage.getItem("nerdolar-token");
 
     const res = await api
-      .get(`/media-product/${id}`, {
+      .post("/comment", params, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -34,14 +23,13 @@ export const mediaProductService = {
         }
         return error;
       });
-
     return res;
   },
-  search: async (title: string, page?: number) => {
+  getAllFromPost: async (postId: number, page: number) => {
     const token = sessionStorage.getItem("nerdolar-token");
 
     const res = await api
-      .get(`/media-products/search?title=${title}&page=${page || 1}`, {
+      .get(`/comments/${postId}?page=${page}&perPage=4`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -52,7 +40,6 @@ export const mediaProductService = {
         }
         return error;
       });
-
     return res;
   },
 };
