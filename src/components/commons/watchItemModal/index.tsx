@@ -117,34 +117,43 @@ const WatchItemModal = ({
               backgroundImage: `url(${process.env.NEXT_PUBLIC_URL}/public/${watchItem.mediaProduct.pageBannerImg})`,
             }}
           >
-            <p>{watchItem.mediaProduct.title}</p>
+            <div onClick={() => toggle()} className={styles.closeIconDiv}>
+              <p>&times;</p>
+            </div>
+            <div className={styles.titleDiv}>
+              <p>{watchItem.mediaProduct.title}</p>
+            </div>
           </div>
           <form className={styles.form}>
             <div className={styles.optionsDiv}>
-              <div>
-                <label htmlFor="currentEpisode">Episódio atual: </label>
-                <input
-                  type="number"
-                  max={watchItem.mediaProduct.currentEpisode}
-                  min={0}
-                  value={currentEpisode.toString()}
-                  onChange={handleCurrentEpisodeChange}
-                />
-              </div>
+              <div className={styles.inputs}>
+                <div>
+                  <label htmlFor="currentEpisode">Episódio atual: </label>
+                  <input
+                    type="number"
+                    max={watchItem.mediaProduct.currentEpisode}
+                    min={0}
+                    value={currentEpisode.toString()}
+                    onChange={handleCurrentEpisodeChange}
+                  />
+                </div>
 
-              <div>
-                <label htmlFor="status">Status: </label>
-                <select
-                  value={status}
-                  onChange={(ev) =>
-                    setStatus(ev.currentTarget.value as "ongoing" | "complete")
-                  }
-                >
-                  <option value="ongoing">Em andamento</option>
-                  {watchItem.mediaProduct.status === "complete" ? (
-                    <option value="complete">Completo</option>
-                  ) : null}
-                </select>
+                <div>
+                  <label htmlFor="status">Status: </label>
+                  <select
+                    value={status}
+                    onChange={(ev) =>
+                      setStatus(
+                        ev.currentTarget.value as "ongoing" | "complete"
+                      )
+                    }
+                  >
+                    <option value="ongoing">Em andamento</option>
+                    {watchItem.mediaProduct.status === "complete" ? (
+                      <option value="complete">Completo</option>
+                    ) : null}
+                  </select>
+                </div>
               </div>
 
               <button

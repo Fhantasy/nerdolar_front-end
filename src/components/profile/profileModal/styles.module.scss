@@ -47,9 +47,35 @@
 
   p {
     width: fit-content;
-    margin: 0px 5px;
+    margin: 5px 5px 0px 5px;
     font-size: 30px;
     line-height: 15px;
     cursor: pointer;
+  }
+}
+
+@media (max-width: 991px) {
+  .modalContent {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .menu {
+      flex-direction: row;
+    }
+  }
+}
+@media (max-width: 335px) {
+  .modalContent {
+    .menu {
+      gap: 0;
+      .menuBtn {
+        width: 75px;
+        border-radius: 0;
+      }
+      .menuBtnActive {
+        border-radius: 0;
+      }
+    }
   }
 }

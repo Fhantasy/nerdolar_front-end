@@ -11,9 +11,9 @@ import { useEffect, useState } from "react";
 import { currentPageSetter } from "@/src/services/currentPageSetter";
 import PageBottom from "../../commons/pageBottom";
 import ListItem from "./listItem";
-import { userService } from "@/src/services/userService";
-import { authService } from "@/src/services/authService";
 import ListItemNotEditable from "./listItem/listItemNotEditable";
+import SplideComponent from "./splideComponent";
+import DataNotFound from "../../commons/dataNotFound";
 
 interface props {
   userId: number;
@@ -21,11 +21,10 @@ interface props {
 }
 
 const UserWatchList = ({ userId, isMyProfile }: props) => {
-  const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>();
   const [watchItens, setWatchItens] = useState<WatchItemType[]>([]);
   const [currentCategory, setCurrentCategory] = useState<CategoryType>();
   const [status, setStatus] = useState<"ongoing" | "complete">("ongoing");
-  const [slideCount, setSlideCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [watchItensEnded, setWatchItensEnded] = useState(false);
 
@@ -55,16 +54,11 @@ const UserWatchList = ({ userId, isMyProfile }: props) => {
     categoryService.getAllOfUserWatchList(userId).then((data) => {
       if (data.data.length > 0) {
         setCategories(data.data);
-        setCurrentCategory(data.data[1]);
-        if (data.data.length > 6) {
-          setSlideCount(6);
-        } else {
-          setSlideCount(data.data.length);
-        }
+        setCurrentCategory(data.data[0]);
+        getWatchItensPerCategory(data.data[0].id).then(() =>
+          currentPageSetter(setCurrentPage)
+        );
       }
-      getWatchItensPerCategory(data.data[1].id).then(() =>
-        currentPageSetter(setCurrentPage)
-      );
     });
   }, []);
 
@@ -74,63 +68,25 @@ const UserWatchList = ({ userId, isMyProfile }: props) => {
     getWatchItensPerCategory(currentCategory.id);
   }, [currentPage, watchItensEnded]);
 
+  if (!categories) {
+    return (
+      <DataNotFound
+        message="Nenhum item na sua Nerdlista! Pesquise e adicione Mídias 
+      para criar uma Nerdlista aonde você pode organizar Filmes, Series, Animes entre outras coisas
+       que você está assistindo ou já assistiu"
+      />
+    );
+  }
+
   return (
     <div className={styles.watchList}>
       <div className={styles.categorySlide}>
-        <Splide
-          options={{
-            type: "loop",
-            perPage: slideCount,
-            perMove: 1,
-            width: 100 * slideCount + (6 - 1) * 5,
-            gap: 5,
-            pagination: false,
-            arrows: categories.length > 6 ? true : false,
-            drag: categories.length > 6 ? true : false,
-          }}
-        >
-          {categories?.map((category, index) => (
-            <SplideSlide key={index}>
-              <button
-                className={styles.categoryBtn}
-                style={
-                  currentCategory?.name === category.name
-                    ? {
-                        backgroundColor: categoryColor(category.name),
-                        color: "white",
-                      }
-                    : {
-                        backgroundColor: "white",
-                        color: categoryColor(category.name),
-                      }
-                }
-                onMouseOver={(ev) => {
-                  ev.currentTarget.style.backgroundColor = categoryColor(
-                    category.name
-                  );
-                  ev.currentTarget.style.color = "white";
-                }}
-                onMouseOut={
-                  currentCategory?.name !== category.name
-                    ? (ev) => {
-                        ev.currentTarget.style.backgroundColor = "white";
-                        ev.currentTarget.style.color = categoryColor(
-                          category.name
-                        );
-                      }
-                    : undefined
-                }
-                onClick={() => {
-                  if (currentCategory === category) return;
-                  resetList();
-                  setCurrentCategory(category);
-                }}
-              >
-                {category.name}
-              </button>
-            </SplideSlide>
-          ))}
-        </Splide>
+        <SplideComponent
+          categories={categories}
+          currentCategory={currentCategory!}
+          setCurrentCategory={setCurrentCategory}
+          resetList={resetList}
+        />
       </div>
 
       <select

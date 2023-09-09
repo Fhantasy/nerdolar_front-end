@@ -1,7 +1,7 @@
 import { PostType } from "@/src/services/postService";
 import styles from "./styles.module.scss";
-import { Carousel, CarouselControl, CarouselItem, Modal } from "reactstrap";
-import { FormEvent, createRef, useState } from "react";
+import { Modal } from "reactstrap";
+import { FormEvent, useState } from "react";
 import UserThumb from "../userThumb";
 import Link from "next/link";
 import EmotesTab from "../emotesTab";
@@ -9,6 +9,7 @@ import { FaRegLaughBeam } from "react-icons/fa";
 import { commentService } from "@/src/services/commentService";
 import ToastComponent from "../toastComponent";
 import CommentsSection from "./commentsSection";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 
 interface props {
   isOpen: boolean;
@@ -17,8 +18,6 @@ interface props {
 }
 
 const PostModal = ({ isOpen, toggle, post }: props) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [animating, setAnimating] = useState(false);
   const [emoteTabIsOpen, setEmoteTabIsOpen] = useState(false);
   const [commentMessage, setCommentMessage] = useState("");
   const [toastColor, setToastColor] = useState("");
@@ -65,20 +64,6 @@ const PostModal = ({ isOpen, toggle, post }: props) => {
     }
   };
 
-  const next = () => {
-    if (animating) return;
-    const nextIndex =
-      activeIndex === post.imageUrls.length - 1 ? 0 : activeIndex + 1;
-    setActiveIndex(nextIndex);
-  };
-
-  const previous = () => {
-    if (animating) return;
-    const nextIndex =
-      activeIndex === 0 ? post.imageUrls.length - 1 : activeIndex - 1;
-    setActiveIndex(nextIndex);
-  };
-
   const autoHeight = (ev: FormEvent<HTMLTextAreaElement>) => {
     ev.currentTarget.style.height = "20px";
     ev.currentTarget.style.height = ev.currentTarget.scrollHeight + "px";
@@ -89,56 +74,41 @@ const PostModal = ({ isOpen, toggle, post }: props) => {
       key={post.id + 1}
       type="button"
       className={styles.closeBtn}
-      style={{ position: "absolute", top: "10px", left: "10px" }}
       onClick={toggle}
     >
       &times;
     </button>
   );
 
-  const carousel = (
-    <Carousel
+  const splide = (
+    <Splide
       key={post.id}
-      className={styles.carousel}
-      activeIndex={activeIndex}
-      next={next}
-      previous={previous}
-      interval={false}
+      className={styles.splide}
+      options={{
+        drag: post.imageUrls.length > 1 ? true : false,
+        arrows: post.imageUrls.length > 1 ? true : false,
+      }}
     >
       {post.imageUrls?.map((imgUrl, index) => (
-        <CarouselItem
-          key={index}
-          onExiting={() => setAnimating(true)}
-          onExited={() => setAnimating(false)}
-        >
-          <div className={styles.carouselItem}>
+        <SplideSlide key={index}>
+          <div className={styles.splideSlide}>
             <img
               src={`${process.env.NEXT_PUBLIC_URL}/${imgUrl}`}
-              alt=""
+              alt="postImg"
               className={styles.postImage}
             />
           </div>
-        </CarouselItem>
+        </SplideSlide>
       ))}
-      <CarouselControl
-        direction="prev"
-        directionText="Previous"
-        onClickHandler={previous}
-      />
-      <CarouselControl
-        direction="next"
-        directionText="Next"
-        onClickHandler={next}
-      />
-    </Carousel>
+    </Splide>
   );
 
   return (
     <Modal
       className={
-        post.imageUrls.length > 0 ? styles.modalWithCarousel : styles.modal
+        post.imageUrls.length > 0 ? styles.modalWithSplide : styles.modal
       }
-      external={[closeBtn, post.imageUrls.length > 0 ? carousel : null]}
+      external={[closeBtn, post.imageUrls.length > 0 ? splide : null]}
       isOpen={isOpen}
       toggle={toggle}
       modalClassName={styles.overlayModal}
@@ -166,6 +136,7 @@ const PostModal = ({ isOpen, toggle, post }: props) => {
             id="comment"
             onInput={autoHeight}
             value={commentMessage}
+            maxLength={300}
             onChange={(ev) => setCommentMessage(ev.currentTarget.value)}
           ></textarea>
           <div className={styles.commentOptionsDiv}>

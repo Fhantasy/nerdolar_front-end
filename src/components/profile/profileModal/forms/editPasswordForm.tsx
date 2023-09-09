@@ -3,7 +3,6 @@ import styles from "./styles.module.scss";
 import { userService } from "@/src/services/userService";
 import { useRouter } from "next/router";
 
-
 const EditPasswordForm = () => {
   const router = useRouter();
   const [currentPassword, setCurrentPassword] = useState("");
@@ -52,6 +51,7 @@ const EditPasswordForm = () => {
           name="currentPassword"
           required
           value={currentPassword}
+          maxLength={40}
           onChange={(ev) => setCurrentPassword(ev.currentTarget.value)}
         />
       </div>
@@ -63,6 +63,7 @@ const EditPasswordForm = () => {
           id="newPassword"
           name="newPassword"
           required
+          maxLength={40}
           value={newPassword}
           onChange={(ev) => setNewPassword(ev.currentTarget.value)}
         />
@@ -75,6 +76,7 @@ const EditPasswordForm = () => {
           id="confirmPassword"
           name="confirmPassword"
           required
+          maxLength={40}
           value={confirmPassword}
           onChange={(ev) => setConfirmPassword(ev.currentTarget.value)}
         />

@@ -16,8 +16,7 @@
     color: $dark;
     font-family: "Teko", sans-serif;
 
-    margin-left: 40px;
-    margin-right: 40px;
+    margin: 0 40px;
     h1 {
       font-weight: bold;
       font-size: 60px;
@@ -57,5 +56,12 @@
 @media (max-width: 545px) {
   .main {
     flex-direction: column;
+  }
+}
+@media (max-width: 380px) {
+  .rightSide {
+    .content {
+      margin: 0 20px;
+    }
   }
 }

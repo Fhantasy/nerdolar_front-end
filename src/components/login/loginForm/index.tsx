@@ -22,7 +22,7 @@ const LoginForm = () => {
     const params = { email, password };
 
     const data = await authService.login(params);
-    console.log(data.status);
+
     if (data.status === 400 || data.status === 401) {
       setToastMessage("A senha ou email estão errados!");
       setToastColor("bg-danger");
@@ -30,9 +30,15 @@ const LoginForm = () => {
       setTimeout(() => {
         setToastIsOpen(false);
       }, 3000);
-      return;
-    } else {
+    } else if (data.status === 200) {
       router.push("/home");
+    } else {
+      setToastMessage("Erro ao fazer login! Tente mais tarde");
+      setToastColor("bg-danger");
+      setToastIsOpen(true);
+      setTimeout(() => {
+        setToastIsOpen(false);
+      }, 3000);
     }
   };
 

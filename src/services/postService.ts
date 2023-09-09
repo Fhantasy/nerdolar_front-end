@@ -67,7 +67,7 @@ export const postService = {
   feed: async (page: number) => {
     const token = sessionStorage.getItem("nerdolar-token");
     const res = await api
-      .get(`/feed?perPage=5&page=${page}`, {
+      .get(`/feed?page=${page}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -34,12 +34,6 @@ const UserPosts = ({ userId }: props) => {
   }, [currentPage, postsEnded]);
 
   useEffect(() => {
-    setPosts([]);
-    setPostsEnded(false);
-    setCurrentPage(1);
-  }, [userId]);
-
-  useEffect(() => {
     getPosts(userId).then(() => currentPageSetter(setCurrentPage));
   }, []);
 

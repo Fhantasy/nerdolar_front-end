@@ -1,4 +1,3 @@
-import { use } from "react";
 import api from "./api";
 
 interface RegisterParams {
@@ -15,7 +14,7 @@ interface LoginParams {
 export const authService = {
   register: async (params: RegisterParams) => {
     const res = await api.post("/register", params).catch((error) => {
-      if (error.response.status === 400) {
+      if (error.response?.status === 400) {
         return error.response;
       }
 
@@ -26,7 +25,7 @@ export const authService = {
 
   login: async (params: LoginParams) => {
     const res = await api.post("/login", params).catch((error) => {
-      if (error.response.status === 400 || error.response.status === 401) {
+      if (error.response?.status === 400 || error.response?.status === 401) {
         return error.response;
       }
       return error;

@@ -6,7 +6,11 @@
 }
 .messageInput {
   width: 100%;
+  resize: none;
   border: none;
+  height: 22px;
+  overflow: hidden;
+  line-height: 22px;
   border-bottom: 2px solid $primary;
 
   &:focus {
@@ -104,6 +108,11 @@
       option {
         border-top: 1px solid $dark;
         cursor: pointer;
+        overflow: hidden;
+
+        span {
+          line-break: auto;
+        }
 
         &:hover {
           background-color: $light;

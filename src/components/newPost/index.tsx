@@ -85,6 +85,11 @@ const PostForm = () => {
     console.log(imagesInput.files);
   };
 
+  const autoHeight = (ev: FormEvent<HTMLTextAreaElement>) => {
+    ev.currentTarget.style.height = "22px";
+    ev.currentTarget.style.height = ev.currentTarget.scrollHeight + "px";
+  };
+
   const formSubmit = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
 
@@ -95,7 +100,7 @@ const PostForm = () => {
     const res = await postService.post(formData);
 
     if (res.status === 201) {
-      router.push("/home");
+      router.push("/home?posted=true");
     } else {
       setToastIsOpen(true);
       setToastMessage("Ocorreu um erro ao postar! Tente mais tarde");
@@ -141,12 +146,13 @@ const PostForm = () => {
 
   return (
     <form onSubmit={formSubmit} className={styles.form}>
-      <input
+      <textarea
         className={styles.messageInput}
-        type="text"
+        onInput={autoHeight}
         name="message"
         id="message"
         placeholder="O que você está pensando..."
+        maxLength={300}
         required
       />
 

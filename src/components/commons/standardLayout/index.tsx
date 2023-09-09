@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import NavMenu from "../navMenu";
 import ReleasesTable from "../releasesTable";
+import { Offcanvas, OffcanvasHeader } from "reactstrap";
 
 interface props {
   pageTitle: string;
@@ -17,6 +18,7 @@ const StandardLayout = ({ pageTitle, mainContent, cbUserNickname }: props) => {
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [currentUser, setCurrentUser] = useState<UserType>();
+  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
     authService.isAuthorizated().then((authorization) => {
@@ -28,11 +30,14 @@ const StandardLayout = ({ pageTitle, mainContent, cbUserNickname }: props) => {
         router.push("/login");
       }
     });
+    setWindowWidth(innerWidth);
+    window.addEventListener("resize", () => setWindowWidth(window.innerWidth));
   }, []);
 
   if (!isAuthorized) {
     return <></>;
   }
+
   return (
     <>
       <Head>
@@ -41,7 +46,7 @@ const StandardLayout = ({ pageTitle, mainContent, cbUserNickname }: props) => {
       <main className={styles.main}>
         <NavMenu nickname={currentUser!.nickname} />
         <div className={styles.mainContent}>{mainContent}</div>
-        <ReleasesTable />
+        {windowWidth > 1219 ? <ReleasesTable /> : null}
       </main>
     </>
   );

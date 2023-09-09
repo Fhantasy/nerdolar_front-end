@@ -38,6 +38,7 @@ const EditAccountForm = ({ user }: props) => {
           name="nickname"
           value={nickname}
           onChange={(ev) => setNickname(ev.currentTarget.value)}
+          maxLength={20}
           required
         />
       </div>
@@ -50,6 +51,7 @@ const EditAccountForm = ({ user }: props) => {
           name="email"
           required
           value={email}
+          maxLength={50}
           onChange={(ev) => setEmail(ev.currentTarget.value)}
         />
       </div>

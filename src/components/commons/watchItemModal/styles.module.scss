@@ -6,28 +6,61 @@
   background-position: center;
   background-size: cover;
   display: flex;
-  align-items: flex-end;
-  padding: 0px 5px;
+  flex-direction: column;
 
-  p {
-    color: $dark;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: $light;
-    padding: 0px 3px;
+  .closeIconDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $light-dark;
+    width: 25px;
+    height: 25px;
+    align-self: flex-end;
+    cursor: pointer;
+
+    p {
+      font-size: 32px;
+      color: $light;
+      line-height: 20px;
+      margin-bottom: 4px;
+    }
+  }
+
+  .titleDiv {
+    margin-top: auto;
+    width: fit-content;
+    padding: 0px 5px;
+    p {
+      color: $dark;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: $light;
+      padding: 0px 3px;
+    }
   }
 }
 .form {
   gap: 7px;
   background-color: $light;
-  padding: 10px 5px;
+  padding: 10px 7px;
   text-align: center;
 
   .optionsDiv {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    gap: 10px;
+
+    .inputs {
+      display: flex;
+      width: auto;
+      gap: 7px;
+      flex-wrap: wrap;
+
+      input {
+        max-width: 90px;
+      }
+    }
 
     .deleteBtn {
       background-color: $light-dark;

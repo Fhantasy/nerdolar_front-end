@@ -49,6 +49,20 @@
       background-color: $primary;
     }
   }
+  .headerIcon {
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    z-index: 1;
+    font-size: 25px;
+    color: #0000008f;
+    transition: 0.4s;
+    cursor: pointer;
+
+    &:hover {
+      color: $light-dark;
+    }
+  }
 }
 .descriptionDiv {
   padding: 5px;
@@ -79,6 +93,10 @@
     gap: 10px;
     font-family: "Barlow", sans-serif;
     font-size: 14px;
+
+    span {
+      cursor: pointer;
+    }
 
     .followCount {
       font-weight: bold;
@@ -111,4 +129,18 @@
   outline: none;
   background-color: $light-dark;
   color: $light;
+}
+.userItem {
+  display: flex;
+  align-items: flex-end;
+  margin: 10px;
+
+  .username {
+    margin-left: 5px;
+    margin-right: 2px;
+    font-size: 16px;
+  }
+  .userNickname {
+    font-size: 12px;
+  }
 }

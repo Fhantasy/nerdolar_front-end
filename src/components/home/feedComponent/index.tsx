@@ -9,31 +9,38 @@ const FeedComponent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsEnded, setPostsEnded] = useState(false);
 
+  const getPosts = async () => {
+    const data = await postService.feed(currentPage);
+
+    if (data.status === 200) {
+      if (data.data.length === 0) {
+        setPostsEnded(true);
+        return;
+      }
+      if (posts) {
+        setPosts([...posts, ...data.data]);
+      } else {
+        setPosts(data.data);
+      }
+    } else {
+      console.log("Erro ao pegar postagens!");
+    }
+  };
+
   useEffect(() => {
     if (postsEnded) return;
-    postService.feed(currentPage).then((data) => {
-      if (data.status === 200) {
-        if (data.data.length === 0) {
-          setPostsEnded(true);
-          return;
-        }
-        if (posts) {
-          setPosts([...posts, ...data.data]);
-        } else {
-          setPosts(data.data);
-        }
-      } else {
-        console.log("erro");
-      }
-    });
+
+    getPosts();
   }, [currentPage]);
 
   useEffect(() => {
-    currentPageSetter(setCurrentPage);
+    getPosts().then(() => {
+      currentPageSetter(setCurrentPage);
+    });
   }, []);
 
   return (
-    <div style={{ width: "700px" }}>
+    <div>
       {posts?.map((post) => (
         <PostCard post={post} key={post.id} />
       ))}

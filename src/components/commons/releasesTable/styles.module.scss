@@ -53,3 +53,9 @@
   border: 2px solid $light-dark;
   padding: 10px;
 }
+
+@media (max-width: 420px) {
+  .releasesSection {
+    width: 260px;
+  }
+}

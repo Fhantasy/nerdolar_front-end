@@ -122,6 +122,7 @@ const EditProfileForm = ({
           id="locale"
           name="locale"
           defaultValue={user.locale}
+          maxLength={30}
         />
       </div>
 

@@ -6,7 +6,27 @@
   min-height: 100vh;
 }
 .mainContent {
+  max-width: 700px;
   width: 700px;
   border-left: 2px solid $dark;
   border-right: 2px solid $dark;
+}
+
+@media (max-width: 765px) {
+  .mainContent {
+    max-width: auto;
+    width: 700px;
+    width: 100%;
+    border-right: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .mainContent {
+    flex-grow: 1;
+    border-left: none;
+  }
+  .main {
+    flex-direction: column;
+  }
 }

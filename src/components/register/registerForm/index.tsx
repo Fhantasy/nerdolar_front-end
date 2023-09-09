@@ -61,19 +61,25 @@ const RegisterForm = () => {
             type="text"
             id="nickname"
             name="nickname"
-            maxLength={30}
+            maxLength={20}
             required
           />
         </div>
 
         <div className={styles.inputGroup}>
           <label htmlFor="email">Email: </label>
-          <input type="email" id="email" name="email" required />
+          <input type="email" id="email" name="email" maxLength={50} required />
         </div>
 
         <div className={styles.inputGroup}>
           <label htmlFor="password">Senha: </label>
-          <input type="password" id="password" name="password" required />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            maxLength={40}
+            required
+          />
         </div>
 
         <div className={styles.inputGroup}>
@@ -82,6 +88,7 @@ const RegisterForm = () => {
             type="password"
             id="passwordConfirm"
             name="passwordConfirm"
+            maxLength={40}
             required
           />
         </div>

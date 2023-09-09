@@ -1,5 +1,11 @@
 import styles from "./styles.module.scss";
-import { FaCakeCandles, FaHouseChimney } from "react-icons/fa6";
+import {
+  FaCakeCandles,
+  FaHouseChimney,
+  FaGear,
+  FaUserPlus,
+  FaUserMinus,
+} from "react-icons/fa6";
 import { UserType, userService } from "@/src/services/userService";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -10,6 +16,8 @@ import UserPosts from "./userPosts";
 import UserWatchList from "./userWatchList";
 import ProfileModal from "./profileModal";
 import SpinnerComponent from "../commons/spinner";
+import DataNotFound from "../commons/dataNotFound";
+import UserFollows from "./userFollows";
 
 interface props {
   cbNickname: Dispatch<SetStateAction<string>>;
@@ -24,6 +32,7 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [currentContent, setCurrentContent] = useState("posts");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   const toggleModal = () => {
     setModalIsOpen((prevstate) => !prevstate);
@@ -42,24 +51,16 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
   const content = () => {
     switch (currentContent) {
       case "posts":
-        return <UserPosts userId={user!.id} />;
+        return <UserPosts key={user!.id} userId={user!.id} />;
       case "watchList":
         return <UserWatchList userId={user!.id} isMyProfile={isMyProfile} />;
+      case "followers":
+        return <UserFollows key="followers" type="followers" />;
+      case "followings":
+        return <UserFollows key="followings" type="followings" />;
       default:
-        return <UserPosts userId={user!.id} />;
+        return <UserPosts key={user!.id} userId={user!.id} />;
     }
-  };
-
-  const contentChoose = (content: string) => {
-    const previousBtn = document.getElementById(currentContent);
-    if (previousBtn) {
-      previousBtn.className = styles.chooseContentBtn;
-    }
-    const currentBtn = document.getElementById(content);
-    if (currentBtn) {
-      currentBtn.className = styles.chooseContentBtnActive;
-    }
-    setCurrentContent(content);
   };
 
   const getUser = async () => {
@@ -67,11 +68,10 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
       const data = await userService.getOne(nickname);
 
       if (data.status === 200) {
-        console.log(data);
         setUser(data.data);
         setIsFollowing(data.data.isFollowing);
         cbNickname(data.data.nickname);
-        contentChoose("posts");
+        setCurrentContent("posts");
       } else {
         setUserFound(false);
         cbNickname("Not Found");
@@ -83,13 +83,17 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
     getUser();
   }, [nickname]);
 
+  useEffect(() => {
+    setWindowWidth(innerWidth);
+    window.addEventListener("resize", () => setWindowWidth(innerWidth));
+  }, []);
+
   if (!userFound) {
-    return <p>Usuario não encontrado</p>;
+    return <DataNotFound message="Usuário não encontrado!" />;
   }
 
   if (!user) return <SpinnerComponent />;
 
-  console.log(user);
   return (
     <div className={styles.profile}>
       <div className={styles.header}>
@@ -114,11 +118,35 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
           <p className={styles.nickname}>@{user.nickname}</p>
         </div>
         {isMyProfile ? (
-          <button onClick={toggleModal}>Editar Perfil</button>
+          <>
+            {windowWidth > 480 ? (
+              <button onClick={toggleModal}>Editar Perfil</button>
+            ) : (
+              <FaGear className={styles.headerIcon} onClick={toggleModal} />
+            )}
+          </>
         ) : (
-          <button onClick={handleFollow}>
-            {isFollowing ? "Deixar de Seguir" : "Seguir"}
-          </button>
+          <>
+            {windowWidth > 480 ? (
+              <button onClick={handleFollow}>
+                {isFollowing ? "Deixar de Seguir" : "Seguir"}
+              </button>
+            ) : (
+              <>
+                {isFollowing ? (
+                  <FaUserMinus
+                    className={styles.headerIcon}
+                    onClick={handleFollow}
+                  />
+                ) : (
+                  <FaUserPlus
+                    className={styles.headerIcon}
+                    onClick={handleFollow}
+                  />
+                )}
+              </>
+            )}
+          </>
         )}
       </div>
       <div className={styles.descriptionDiv}>
@@ -143,11 +171,11 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
           ) : null}
         </div>
         <div className={styles.follows}>
-          <span>
+          <span onClick={() => setCurrentContent("followers")}>
             Seguidores{" "}
             <span className={styles.followCount}>{user.followers.length}</span>
           </span>
-          <span>
+          <span onClick={() => setCurrentContent("followings")}>
             Seguindo{" "}
             <span className={styles.followCount}>{user.following.length}</span>
           </span>
@@ -155,16 +183,24 @@ const ProfileComponent = ({ cbNickname, isMyProfile }: props) => {
       </div>
       <div className={styles.toggleContentDiv}>
         <button
-          className={styles.chooseContentBtnActive}
+          className={
+            currentContent === "posts"
+              ? styles.chooseContentBtnActive
+              : styles.chooseContentBtn
+          }
           id="posts"
-          onClick={() => contentChoose("posts")}
+          onClick={() => setCurrentContent("posts")}
         >
           Postagens
         </button>
         <button
-          className={styles.chooseContentBtn}
+          className={
+            currentContent === "watchList"
+              ? styles.chooseContentBtnActive
+              : styles.chooseContentBtn
+          }
           id="watchList"
-          onClick={() => contentChoose("watchList")}
+          onClick={() => setCurrentContent("watchList")}
         >
           Nerd Lista
         </button>

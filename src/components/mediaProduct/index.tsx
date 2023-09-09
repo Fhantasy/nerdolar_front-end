@@ -20,6 +20,7 @@ import PageBottom from "../commons/pageBottom";
 import { watchItemService } from "@/src/services/wacthItemService";
 import WatchItemModal from "../commons/watchItemModal";
 import SpinnerComponent from "../commons/spinner";
+import DataNotFound from "../commons/dataNotFound";
 
 interface props {
   cbTitle: Dispatch<SetStateAction<string>>;
@@ -90,7 +91,7 @@ const MediaProductComponent = ({ cbTitle }: props) => {
   }, [currentPage]);
 
   if (!mediaFound) {
-    return <p>Midia não encontrada</p>;
+    return <DataNotFound message="Mídia não encontrada!" />;
   }
 
   if (!mediaProduct) return <SpinnerComponent />;

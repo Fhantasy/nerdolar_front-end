@@ -7,7 +7,6 @@ export function currentPageSetter(
   const intersectionObserver = new IntersectionObserver((entries) => {
     if (entries.some((entry) => entry.isIntersecting)) {
       setCurrentPage((prevState) => {
-        console.log(`Setado page para ${prevState + 1}`);
         return prevState + 1;
       });
     }
