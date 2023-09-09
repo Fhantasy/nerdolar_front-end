@@ -9,7 +9,10 @@ const nextConfig = {
         pathname: "/public/**",
       },
     ],
+    unoptimized: true,
   },
+  reactStrictMode: true,
+  output: "export",
 };
 
 module.exports = nextConfig;
