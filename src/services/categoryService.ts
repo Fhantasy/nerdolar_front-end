@@ -9,7 +9,7 @@ export const categoryService = {
   getAllOfUserWatchList: async (userId: number) => {
     const token = sessionStorage.getItem("nerdolar-token");
     const res = await api
-      .get(`/watch-itens/categories/${userId}`, {
+      .get(`/watch-items/categories/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
