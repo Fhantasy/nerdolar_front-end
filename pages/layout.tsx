@@ -1,12 +1,7 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { metadata } from "@/src/services/metadata";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Nerdolar",
-  description: "A casa dos nerdolas",
-};
 
 export default function RootLayout({
   children,
@@ -15,6 +10,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
+      <head>
+        <metadata />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );
